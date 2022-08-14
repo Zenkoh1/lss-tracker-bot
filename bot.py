@@ -11,11 +11,12 @@ import os
 
 MODE = 'dev'
 TOKEN = os.environ.get('TOKEN')
-PORT = int(os.environ.get('PORT', 5000))
+
 HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME')
 def run(updater):
 
         if MODE == 'dev':
+            PORT = int(os.environ.get('PORT', 5000))
             updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
                           url_path=TOKEN)

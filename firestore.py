@@ -7,8 +7,10 @@ import constants
 
 import datetime
 
+import os
 
-cred = credentials.Certificate("lss-equipment-tracker-firebase-adminsdk-leix1-08cb991756.json")
+FIREBASE_CREDS = os.environ.get("FIREBASE_CREDS")
+cred = credentials.Certificate(FIREBASE_CREDS)
 firebase_admin.initialize_app(cred)
 db: firestore.firestore.Client = firestore.client()
 
