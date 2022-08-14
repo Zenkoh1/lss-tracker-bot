@@ -1,29 +1,23 @@
-from genericpath import exists
-from telegram import Bot
 from telegram.ext import Updater, CommandHandler, MessageHandler,Filters
-from telegram.error import BadRequest    
 
 import command_response
 
 import os
 
-#TOKEN = "5540495235:AAFfPf3FmjxmUFHwtAbegpatjILTq_gE_jI"
 
-MODE = 'dev'
 TOKEN = os.environ.get('TOKEN')
-
 HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME')
+
 def run(updater):
 
-        if MODE == 'dev':
-            PORT = int(os.environ.get('PORT', 5000))
-            updater.start_webhook(listen="0.0.0.0",
-                          port=int(PORT),
-                          url_path=TOKEN)
-            updater.bot.setWebhook(f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}')
+    PORT = int(os.environ.get('PORT', 5000))
+    updater.start_webhook(listen="0.0.0.0",
+                  port=int(PORT),
+                  url_path=TOKEN)
+    updater.bot.setWebhook(f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}')
 
 
-        updater.start_polling()
+     
 
 
 
