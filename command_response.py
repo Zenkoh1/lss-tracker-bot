@@ -136,10 +136,10 @@ def command_help(update, context):
             "/eq - View the equipment data\n"
             "\n"
             "*Edit Database*\n"
-            "/new_ac - Add new aircraft to the database\n"
-            "/new_eq - Add new equipment to the database\n"
-            "/del_ac - Remove aircraft from the database\n"
-            "/del_eq - Remove equipment from the database\n"
+            "/new\_ac - Add new aircraft to the database\n"
+            "/new\_eq - Add new equipment to the database\n"
+            "/del\_ac - Remove aircraft from the database\n"
+            "/del\_eq - Remove equipment from the database\n"
         )
         
         update.message.reply_text(msg,parse_mode = 'Markdown')
