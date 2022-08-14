@@ -9,7 +9,7 @@ import datetime
 import os
 
 FIREBASE_CREDS = os.environ.get("FIREBASE_CREDS")
-cred = credentials.Certificate(FIREBASE_CREDS)
+cred = credentials.Certificate(dict(FIREBASE_CREDS))
 firebase_admin.initialize_app(cred)
 db: firestore.firestore.Client = firestore.client()
 
