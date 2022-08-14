@@ -115,7 +115,7 @@ def command_delete_equipment(update, context):
     try:
         
         
-        update.message.reply_text("Enter the equipment ID(s), separated by spaces")
+        update.message.reply_text("Enter the equipment ID(s), separated by spaces.")
         raw_text_type = constants.RawTextType.DELETE_EQUIPMENT
         
     except BadRequest:
@@ -124,7 +124,30 @@ def command_delete_equipment(update, context):
 
 
 
-
+def command_help(update, context):
+    try:
+        msg = (
+            "*Change Aircraft Config*\n"
+            "/add - Add equipment to the aircraft\n"
+            "/remove - Remove equipment from the aircraft\n"
+            "\n"
+            "*View Data*\n"
+            "/ac - View the aircraft data\n"
+            "/eq - View the equipment data\n"
+            "\n"
+            "*Edit Database*\n"
+            "/new_ac - Add new aircraft to the database\n"
+            "/new_eq - Add new equipment to the database\n"
+            "/del_ac - Remove aircraft from the database\n"
+            "/del_eq - Remove equipment from the database\n"
+        )
+        
+        update.message.reply_text(msg,parse_mode = 'Markdown')
+       
+        
+    except BadRequest:
+  
+        update.message.reply_text("An error has occurred, please try again.")
 
 
 
@@ -191,9 +214,7 @@ def raw_text_handler(update, context):
             update.message.reply_text(input_feedback_info.msg, parse_mode = 'Markdown')
 
         else:
-            msg ="placeholder for /help, ie all the commands"
-
-            update.message.reply_text(msg, parse_mode = 'Markdown')
+            command_help(update,context)
 
     except BadRequest:
         update.message.reply_text("An error has occurred, please try again.")
