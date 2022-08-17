@@ -149,7 +149,7 @@ def aircraft_info(userinput: str):
     for equipment in indiv_ac_equipment_list:
         indiv_equipment_msg = (f"{equipment + chr(10)}"
                                f"•Brought onto aircraft by {indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_NAME]} at "
-                               f"{datetime.strftime(indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_TIME].astimezone(), date_format)+ chr(10) + chr(10)}")
+                               f"{datetime.strftime(indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_TIME].astimezone(constants.TIMEZONE), date_format)+ chr(10) + chr(10)}")
         msg += indiv_equipment_msg
    
     return InputFeedbackInfo(msg, True)
@@ -182,10 +182,10 @@ def equipment_info(userinput: str):
 
     if eq_info[constants.AIRCRAFT] == None:
         temp_msg = (f"Removed from aircraft by {eq_info[constants.LAST_CHANGED_NAME]} "
-                    f"at {datetime.strftime(eq_info[constants.LAST_CHANGED_TIME].astimezone(), date_format)}")
+                    f"at {datetime.strftime(eq_info[constants.LAST_CHANGED_TIME].astimezone(constants.TIMEZONE), date_format)}")
     else:
         temp_msg = (f"Brought onto aircraft by {eq_info[constants.LAST_CHANGED_NAME]} "
-                    f"at {datetime.strftime(eq_info[constants.LAST_CHANGED_TIME].astimezone(), date_format)}")
+                    f"at {datetime.strftime(eq_info[constants.LAST_CHANGED_TIME].astimezone(constants.TIMEZONE), date_format)}")
     msg += temp_msg
     return InputFeedbackInfo(msg, True)
 
