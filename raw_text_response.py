@@ -156,7 +156,7 @@ def aircraft_info(userinput: str):
             msg += indiv_equipment_msg
 
     else:
-        msg += "*_NO EQUIPMENT_*"
+        msg += "_NO EQUIPMENT_"
    
     return InputFeedbackInfo(msg, True)
 
