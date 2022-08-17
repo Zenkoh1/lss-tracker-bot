@@ -126,7 +126,7 @@ def aircraft_info(userinput: str):
             
             equipment_list = all_ac_info[ac_number][constants.EQUIPMENT].keys()
             indiv_ac_msg = (
-                f"*{ac_number}*{chr(10)}"
+                f"*{ac_number}*{chr(10)}🚁"
                 f"{''.join(map(lambda x: f'•{x + chr(10)}',equipment_list))}"
                 "\n"
             )
@@ -145,12 +145,18 @@ def aircraft_info(userinput: str):
     print(indiv_ac_equipment_list)
     date_format = "%d/%m/%y %H:%M:%S"
    
-    msg = f'Aircraft number: *{useful_info}*{chr(10) + chr(10)}'
-    for equipment in indiv_ac_equipment_list:
-        indiv_equipment_msg = (f"{equipment + chr(10)}"
-                               f"•Brought onto aircraft by {indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_NAME]} at "
-                               f"{datetime.strftime(indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_TIME].astimezone(constants.TIMEZONE), date_format)+ chr(10) + chr(10)}")
-        msg += indiv_equipment_msg
+    msg = f'Aircraft number: *{useful_info}*{chr(10) + chr(10)}🚁'
+
+    if (indiv_ac_equipment_list):
+    
+        for equipment in indiv_ac_equipment_list:
+            indiv_equipment_msg = (f"{equipment + chr(10)}"
+                                f"•Brought onto aircraft by {indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_NAME]} at "
+                                f"{datetime.strftime(indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_TIME].astimezone(constants.TIMEZONE), date_format)+ chr(10) + chr(10)}")
+            msg += indiv_equipment_msg
+
+    else:
+        msg += "*_NO EQUIPMENT_*"
    
     return InputFeedbackInfo(msg, True)
 
