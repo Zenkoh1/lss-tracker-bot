@@ -156,7 +156,11 @@ def raw_text_handler(update, context):
     global raw_text_type
     try: 
 
-        user_input = update.message.text
+        user_input: str = update.message.text
+
+        #standardise to all caps
+        user_input = user_input.upper()
+
         username = update.message.from_user['username']
 
         if raw_text_type == constants.RawTextType.NEW_AIRCRAFT:
