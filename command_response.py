@@ -1,5 +1,6 @@
 
 import enum
+from multiprocessing.sharedctypes import Value
 from telegram.error import BadRequest  
 
 import firestore
@@ -149,6 +150,35 @@ def command_help(update, context):
   
         update.message.reply_text("An error has occurred, please try again.")
 
+def command_gmt(update, context):
+    try:
+
+
+        useful_info = context.args[0]
+
+        try:
+            gmt = int(useful_info)
+
+            if (gmt > 12 or gmt < -12) :
+                raise ValueError("Gmt not in range")
+            
+            firestore.set_gmt(gmt)
+            
+            msg = f"GMT changed to {useful_info}."
+
+        except ValueError:
+            msg = "Please enter in the correct format (+/-) (1-12)."
+
+        
+
+        
+        
+        update.message.reply_text(msg,parse_mode = 'Markdown')
+       
+        
+    except BadRequest:
+  
+        update.message.reply_text("An error has occurred, please try again.")
 
 
 
@@ -163,7 +193,7 @@ def raw_text_handler(update, context):
 
         username = update.message.from_user['username']
 
-        userDate = update.message.date
+        user_date = update.message.date
 
         if raw_text_type == constants.RawTextType.NEW_AIRCRAFT:
             input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.new_aircraft(user_input)
@@ -179,14 +209,14 @@ def raw_text_handler(update, context):
             
             update.message.reply_text(input_feedback_info.msg)
         elif raw_text_type == constants.RawTextType.ADD_EQUIPMENT:
-            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.add_equipment(user_input, username, userDate)
+            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.add_equipment(user_input, username, user_date)
             if input_feedback_info.correct_input:
                 raw_text_type = None
             
             update.message.reply_text(input_feedback_info.msg)
 
         elif raw_text_type == constants.RawTextType.REMOVE_EQUIPMENT:
-            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.remove_equipment(user_input, username,  userDate)
+            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.remove_equipment(user_input, username,  user_date)
             if input_feedback_info.correct_input:
                 raw_text_type = None
             

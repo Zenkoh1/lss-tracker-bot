@@ -1,3 +1,4 @@
+from pydoc import doc
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -23,6 +24,22 @@ cred = credentials.Certificate({
 })
 firebase_admin.initialize_app(cred)
 db: firestore.firestore.Client = firestore.client()
+
+
+def set_gmt(gmt):
+    doc_ref = db.collection(constants.TIMEZONE).document(constants.TIMEZONE)
+  
+    doc_ref.set({constants.GMT: gmt})
+
+
+def get_gmt(gmt):
+
+    doc_ref = db.collection(constants.TIMEZONE).document(constants.TIMEZONE).get()
+  
+    doc_dict = doc_ref.to_dict()
+    
+
+    return doc_dict[constants.GMT]
 
 def add_new_aircraft(number):
     doc_ref = db.collection(constants.AIRCRAFT).document(number)

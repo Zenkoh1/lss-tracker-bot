@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from telegram.error import BadRequest 
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import firestore
 
@@ -119,6 +119,8 @@ def remove_equipment(userinput: str, username: str,  user_date: datetime):
 def aircraft_info(userinput: str):
     useful_info = userinput.split(' ')[0]
 
+    gmt = firestore.get_gmt()
+
     if useful_info.lower() == 'all':
         all_ac_info: dict =  firestore.get_all_aircraft_info()
         msg = ''
@@ -152,7 +154,7 @@ def aircraft_info(userinput: str):
         for equipment in indiv_ac_equipment_list:
             indiv_equipment_msg = (f"{equipment + chr(10)}"
                                 f"•Brought onto aircraft by {indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_NAME]} at "
-                                f"{datetime.strftime(indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_TIME], date_format)+ chr(10) + chr(10)}")
+                                f"{datetime.strftime(indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_TIME] + timedelta(hours=gmt), date_format)+ chr(10) + chr(10)}")
             msg += indiv_equipment_msg
 
     else:
@@ -162,6 +164,8 @@ def aircraft_info(userinput: str):
 
 def equipment_info(userinput: str):
     useful_info = userinput.split(' ')[0]
+
+    gmt = firestore.get_gmt()
 
     
     if (not firestore.is_equipment_existing(useful_info)):
@@ -188,10 +192,10 @@ def equipment_info(userinput: str):
 
     if eq_info[constants.AIRCRAFT] == None:
         temp_msg = (f"Removed from aircraft by {eq_info[constants.LAST_CHANGED_NAME]} "
-                    f"at {datetime.strftime(eq_info[constants.LAST_CHANGED_TIME], date_format)}")
+                    f"at {datetime.strftime(eq_info[constants.LAST_CHANGED_TIME]+ timedelta(hours=gmt), date_format)}")
     else:
         temp_msg = (f"Brought onto aircraft by {eq_info[constants.LAST_CHANGED_NAME]} "
-                    f"at {datetime.strftime(eq_info[constants.LAST_CHANGED_TIME], date_format)}")
+                    f"at {datetime.strftime(eq_info[constants.LAST_CHANGED_TIME]+ timedelta(hours=gmt), date_format)}")
     msg += temp_msg
     return InputFeedbackInfo(msg, True)
 

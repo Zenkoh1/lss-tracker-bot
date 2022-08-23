@@ -7,6 +7,8 @@ EQUIPMENT = 'Equipment'
 LAST_CHANGED_TIME = 'last_changed_time'
 LAST_CHANGED_NAME = 'last_changed_name'
 AIRCRAFT = 'Aircraft'
+TIMEZONE = 'Timezone'
+GMT = 'gmt'
 
 #other constants
 # TIMEZONE = pytz.timezone('Asia/Singapore')
