@@ -141,6 +141,9 @@ def command_help(update, context):
             "/new\_eq - Add new equipment to the database\n"
             "/del\_ac - Remove aircraft from the database\n"
             "/del\_eq - Remove equipment from the database\n"
+            "\n"
+            "*Change timezone*\n"
+            "/gmt - Change the timezone (in GMT)\n"
         )
         
         update.message.reply_text(msg,parse_mode = 'Markdown')
@@ -170,7 +173,7 @@ def command_start(update, context):
     global raw_text_type
     try:
         command_help(update, context)
-        msg = "Welcome! Please enter the GMT timezone you are in to start (eg. +8, -7)! You will be able to change this later on with /gmt."
+        msg = f"Welcome! Please enter the GMT timezone you are in to start (eg. +8, -7), defaulting to {constants.SG_GMT:+}. You will be able to change this later on with /gmt."
         
         raw_text_type = constants.RawTextType.GMT
         
