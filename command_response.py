@@ -169,7 +169,7 @@ def command_gmt(update, context):
 def command_start(update, context):
     global raw_text_type
     try:
-        command_help()
+        command_help(update, context)
         msg = "Welcome! Please enter the GMT timezone you are in to start (eg. +8, -7)! You will be able to change this later on with /gmt."
         
         raw_text_type = constants.RawTextType.GMT
