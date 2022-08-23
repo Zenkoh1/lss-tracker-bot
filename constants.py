@@ -12,6 +12,7 @@ GMT = 'gmt'
 
 #other constants
 # TIMEZONE = pytz.timezone('Asia/Singapore')
+SG_GMT = 8
 
 
 class RawTextType(Enum):
@@ -23,4 +24,5 @@ class RawTextType(Enum):
     EQUIPMENT_INFO = 6
     DELETE_AIRCRAFT = 7
     DELETE_EQUIPMENT = 8
+    GMT = 9
     

@@ -119,7 +119,7 @@ def remove_equipment(userinput: str, username: str,  user_date: datetime):
 def aircraft_info(userinput: str,context ):
     useful_info = userinput.split(' ')[0]
 
-    gmt = context.user_data.get(constants.GMT, 0)
+    gmt = context.user_data.get(constants.GMT, constants.SG_GMT)
 
     if useful_info.lower() == 'all':
         all_ac_info: dict =  firestore.get_all_aircraft_info()
@@ -165,7 +165,7 @@ def aircraft_info(userinput: str,context ):
 def equipment_info(userinput: str, context):
     useful_info = userinput.split(' ')[0]
 
-    gmt = context.user_data.get(constants.GMT, 0)
+    gmt = context.user_data.get(constants.GMT, constants.SG_GMT)
 
     
     if (not firestore.is_equipment_existing(useful_info)):
@@ -235,6 +235,31 @@ def delete_equipment(userinput: str):
     msg = f"{', '.join(eq_list)} has been successfully removed from the database."
 
     return InputFeedbackInfo(msg, True)
+
+
+def gmt(userinput: str, context):
+
+    
+    try:
+        gmt = int(userinput)
+        if (gmt > 12 or gmt < -12) :
+            raise ValueError("Gmt not in range")
+        
+        context.user_data[constants.GMT] = gmt
+        
+        msg = f"GMT changed to {userinput}."
+        return InputFeedbackInfo(msg, True)
+    except ValueError:
+        msg = "Please enter in the correct format (+/-) (1-12)."
+        return InputFeedbackInfo(msg, False)
+    
+    
+    
+    
+
+       
+        
+  
 
 
 @dataclass

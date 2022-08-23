@@ -151,24 +151,28 @@ def command_help(update, context):
         update.message.reply_text("An error has occurred, please try again.")
 
 def command_gmt(update, context):
+    global raw_text_type
     try:
 
 
-        useful_info = context.args[0]
+        msg = "Please enter the GMT timezone you are in (eg. +8, -7)!"
 
-        try:
-            gmt = int(useful_info)
+        raw_text_type = constants.RawTextType.GMT
+        
+        update.message.reply_text(msg,parse_mode = 'Markdown')
+       
+        
+    except BadRequest:
+  
+        update.message.reply_text("An error has occurred, please try again.")
 
-            if (gmt > 12 or gmt < -12) :
-                raise ValueError("Gmt not in range")
-            
-            context.user_data[constants.GMT] = gmt
-            
-            msg = f"GMT changed to {useful_info}."
-
-        except ValueError:
-            msg = "Please enter in the correct format (+/-) (1-12)."
-
+def command_start(update, context):
+    global raw_text_type
+    try:
+        command_help()
+        msg = "Welcome! Please enter the GMT timezone you are in to start (eg. +8, -7)! You will be able to change this later on with /gmt."
+        
+        raw_text_type = constants.RawTextType.GMT
         
 
         
@@ -179,6 +183,10 @@ def command_gmt(update, context):
     except BadRequest:
   
         update.message.reply_text("An error has occurred, please try again.")
+
+
+
+
 
 
 
@@ -248,6 +256,14 @@ def raw_text_handler(update, context):
                 raw_text_type = None
             
             update.message.reply_text(input_feedback_info.msg, parse_mode = 'Markdown')
+
+        elif raw_text_type == constants.RawTextType.GMT:
+            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.gmt(user_input, context)
+            if input_feedback_info.correct_input:
+                raw_text_type = None
+            
+            update.message.reply_text(input_feedback_info.msg, parse_mode = 'Markdown')
+            
 
         else:
             command_help(update,context)
