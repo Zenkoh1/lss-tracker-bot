@@ -34,27 +34,26 @@ def add_new_equipment(id):
     if (not doc_ref.get().exists):
         doc_ref.set({constants.AIRCRAFT: None, constants.LAST_CHANGED_TIME: None, constants.LAST_CHANGED_NAME: None})
 
-def add_equipment_to_aircraft(aircraft_number, equipment_id, username):
+def add_equipment_to_aircraft(aircraft_number, equipment_id, username, user_date):
 
-    time_now = datetime.datetime.now(constants.TIMEZONE)
+    #time_now = datetime.datetime.now(constants.TIMEZONE)
 
-    print(time_now)
     #update aircraft collection
     ac_doc_ref = db.collection(constants.AIRCRAFT).document(aircraft_number)
-    ac_doc_ref.update({f"{constants.EQUIPMENT}.{equipment_id}": {constants.LAST_CHANGED_TIME: time_now, constants.LAST_CHANGED_NAME: username}})
+    ac_doc_ref.update({f"{constants.EQUIPMENT}.{equipment_id}": {constants.LAST_CHANGED_TIME:  user_date, constants.LAST_CHANGED_NAME: username}})
 
     #update equipment collection
     eq_doc_ref = db.collection(constants.EQUIPMENT).document(equipment_id)
-    eq_doc_ref.update({constants.AIRCRAFT: aircraft_number, constants.LAST_CHANGED_TIME: time_now, constants.LAST_CHANGED_NAME: username})
+    eq_doc_ref.update({constants.AIRCRAFT: aircraft_number, constants.LAST_CHANGED_TIME: user_date, constants.LAST_CHANGED_NAME: username})
 
-def remove_equipment_from_aircraft(equipment_id, username):
-    time_now = datetime.datetime.now(constants.TIMEZONE)
+def remove_equipment_from_aircraft(equipment_id, username, user_date):
+    #time_now = datetime.datetime.now(constants.TIMEZONE)
 
     #update equipment collection
     eq_doc_ref = db.collection(constants.EQUIPMENT).document(equipment_id)
     aircraft_number = eq_doc_ref.get().get(constants.AIRCRAFT)
 
-    eq_doc_ref.update({constants.AIRCRAFT: None, constants.LAST_CHANGED_TIME: time_now, constants.LAST_CHANGED_NAME: username})
+    eq_doc_ref.update({constants.AIRCRAFT: None, constants.LAST_CHANGED_TIME:  user_date, constants.LAST_CHANGED_NAME: username})
     
     
     #update aircraft collection

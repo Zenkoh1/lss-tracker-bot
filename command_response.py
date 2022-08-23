@@ -163,6 +163,8 @@ def raw_text_handler(update, context):
 
         username = update.message.from_user['username']
 
+        userDate = update.message.date
+
         if raw_text_type == constants.RawTextType.NEW_AIRCRAFT:
             input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.new_aircraft(user_input)
             if input_feedback_info.correct_input:
@@ -177,14 +179,14 @@ def raw_text_handler(update, context):
             
             update.message.reply_text(input_feedback_info.msg)
         elif raw_text_type == constants.RawTextType.ADD_EQUIPMENT:
-            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.add_equipment(user_input, username)
+            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.add_equipment(user_input, username, userDate)
             if input_feedback_info.correct_input:
                 raw_text_type = None
             
             update.message.reply_text(input_feedback_info.msg)
 
         elif raw_text_type == constants.RawTextType.REMOVE_EQUIPMENT:
-            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.remove_equipment(user_input, username)
+            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.remove_equipment(user_input, username,  userDate)
             if input_feedback_info.correct_input:
                 raw_text_type = None
             

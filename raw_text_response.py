@@ -45,7 +45,7 @@ def new_equipment(userinput: str):
     
     return InputFeedbackInfo(msg, True)
 
-def add_equipment(userinput: str, username: str):
+def add_equipment(userinput: str, username: str,  user_date: datetime):
     
     input_list = userinput.split(' ')
 
@@ -75,7 +75,7 @@ def add_equipment(userinput: str, username: str):
     
     #loop through twice so it makes sure all equipment is valid first
     for equipment_id in equipment_list:
-        firestore.add_equipment_to_aircraft(aircraft_number, equipment_id, username)
+        firestore.add_equipment_to_aircraft(aircraft_number, equipment_id, username, user_date)
      
     
     
@@ -89,7 +89,7 @@ def add_equipment(userinput: str, username: str):
     return InputFeedbackInfo(msg, True)
 
 
-def remove_equipment(userinput: str, username: str):
+def remove_equipment(userinput: str, username: str,  user_date: datetime):
     equipment_list = userinput.split(' ')
     
         
@@ -105,7 +105,7 @@ def remove_equipment(userinput: str, username: str):
 
     #loop through twice so it makes sure all equipment is valid first
     for id in equipment_list:
-        firestore.remove_equipment_from_aircraft(id, username)
+        firestore.remove_equipment_from_aircraft(id, username, user_date)
     
     
     
@@ -152,7 +152,7 @@ def aircraft_info(userinput: str):
         for equipment in indiv_ac_equipment_list:
             indiv_equipment_msg = (f"{equipment + chr(10)}"
                                 f"•Brought onto aircraft by {indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_NAME]} at "
-                                f"{datetime.strftime(indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_TIME].astimezone(constants.TIMEZONE), date_format)+ chr(10) + chr(10)}")
+                                f"{datetime.strftime(indiv_ac_equipment_list[equipment][constants.LAST_CHANGED_TIME], date_format)+ chr(10) + chr(10)}")
             msg += indiv_equipment_msg
 
     else:
@@ -188,10 +188,10 @@ def equipment_info(userinput: str):
 
     if eq_info[constants.AIRCRAFT] == None:
         temp_msg = (f"Removed from aircraft by {eq_info[constants.LAST_CHANGED_NAME]} "
-                    f"at {datetime.strftime(eq_info[constants.LAST_CHANGED_TIME].astimezone(constants.TIMEZONE), date_format)}")
+                    f"at {datetime.strftime(eq_info[constants.LAST_CHANGED_TIME], date_format)}")
     else:
         temp_msg = (f"Brought onto aircraft by {eq_info[constants.LAST_CHANGED_NAME]} "
-                    f"at {datetime.strftime(eq_info[constants.LAST_CHANGED_TIME].astimezone(constants.TIMEZONE), date_format)}")
+                    f"at {datetime.strftime(eq_info[constants.LAST_CHANGED_TIME], date_format)}")
     msg += temp_msg
     return InputFeedbackInfo(msg, True)
 

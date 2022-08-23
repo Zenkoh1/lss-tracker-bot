@@ -9,7 +9,7 @@ LAST_CHANGED_NAME = 'last_changed_name'
 AIRCRAFT = 'Aircraft'
 
 #other constants
-TIMEZONE = pytz.timezone('Asia/Singapore')
+# TIMEZONE = pytz.timezone('Asia/Singapore')
 
 
 class RawTextType(Enum):
