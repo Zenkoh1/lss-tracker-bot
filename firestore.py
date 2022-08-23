@@ -32,7 +32,7 @@ def set_gmt(gmt):
     doc_ref.set({constants.GMT: gmt})
 
 
-def get_gmt(gmt):
+def get_gmt():
 
     doc_ref = db.collection(constants.TIMEZONE).document(constants.TIMEZONE).get()
   
