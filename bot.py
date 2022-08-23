@@ -41,4 +41,5 @@ if __name__ == '__main__':
     dp.add_handler(CommandHandler("del_ac", command_response.command_delete_aircraft))
     dp.add_handler(CommandHandler("del_eq", command_response.command_delete_equipment))
     dp.add_handler(CommandHandler("help", command_response.command_help))
+    dp.add_handler(CommandHandler("start", command_response.command_help))
     run(updater)
