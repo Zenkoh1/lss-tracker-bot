@@ -247,7 +247,7 @@ def gmt(userinput: str, context):
         
         context.user_data[constants.GMT] = gmt
         
-        msg = f"GMT changed to {userinput:+}."
+        msg = f"GMT changed to {gmt:+}."
         return InputFeedbackInfo(msg, True)
     except ValueError:
         msg = "Please enter in the correct format (+/-) (1-12)."
