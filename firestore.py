@@ -26,7 +26,7 @@ firebase_admin.initialize_app(cred)
 db: firestore.firestore.Client = firestore.client()
 
 
-def set_gmt(gmt):
+""" def set_gmt(gmt):
     doc_ref = db.collection(constants.TIMEZONE).document(constants.TIMEZONE)
   
     doc_ref.set({constants.GMT: gmt})
@@ -40,7 +40,7 @@ def get_gmt():
     
 
     return doc_dict[constants.GMT]
-
+ """
 def add_new_aircraft(number):
     doc_ref = db.collection(constants.AIRCRAFT).document(number)
     if (not doc_ref.get().exists):

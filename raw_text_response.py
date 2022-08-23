@@ -116,10 +116,10 @@ def remove_equipment(userinput: str, username: str,  user_date: datetime):
     return InputFeedbackInfo(msg, True)
 
 
-def aircraft_info(userinput: str):
+def aircraft_info(userinput: str,context ):
     useful_info = userinput.split(' ')[0]
 
-    gmt = firestore.get_gmt()
+    gmt = context.user_data.get(constants.GMT, 0)
 
     if useful_info.lower() == 'all':
         all_ac_info: dict =  firestore.get_all_aircraft_info()
@@ -162,10 +162,10 @@ def aircraft_info(userinput: str):
    
     return InputFeedbackInfo(msg, True)
 
-def equipment_info(userinput: str):
+def equipment_info(userinput: str, context):
     useful_info = userinput.split(' ')[0]
 
-    gmt = firestore.get_gmt()
+    gmt = context.user_data.get(constants.GMT, 0)
 
     
     if (not firestore.is_equipment_existing(useful_info)):

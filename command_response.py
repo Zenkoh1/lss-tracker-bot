@@ -162,7 +162,7 @@ def command_gmt(update, context):
             if (gmt > 12 or gmt < -12) :
                 raise ValueError("Gmt not in range")
             
-            firestore.set_gmt(gmt)
+            context.user_data[constants.GMT] = gmt
             
             msg = f"GMT changed to {useful_info}."
 
@@ -223,14 +223,14 @@ def raw_text_handler(update, context):
             update.message.reply_text(input_feedback_info.msg)
 
         elif raw_text_type == constants.RawTextType.AIRCRAFT_INFO:
-            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.aircraft_info(user_input)
+            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.aircraft_info(user_input, context)
             if input_feedback_info.correct_input:
                 raw_text_type = None
             
             update.message.reply_text(input_feedback_info.msg, parse_mode = 'Markdown')
 
         elif raw_text_type == constants.RawTextType.EQUIPMENT_INFO:
-            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.equipment_info(user_input)
+            input_feedback_info: raw_text_response.InputFeedbackInfo = raw_text_response.equipment_info(user_input, context)
             if input_feedback_info.correct_input:
                 raw_text_type = None
             
